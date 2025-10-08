@@ -17,15 +17,15 @@ timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 
 case $choice in
 1)
-logfile="heart_rate.log"
+logfile="heart_rate_log.log"
 archivefolder="heart_data_archive"
 ;;
 2)
-logfile="temperature.log"
+logfile="temperature_log.log"
 archivefolder="temperature_data_archive"
 ;;
 3)
-logfile="water_usage.log"
+logfile="water_usage_log.log"
 archivefolder="water_usage_data_archive"
 ;;
 *)
