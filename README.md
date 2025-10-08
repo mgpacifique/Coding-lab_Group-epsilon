@@ -96,17 +96,9 @@ What the analysis includes:
 
 The script handles empty log files and will write "No entries found." when applicable.
 
-## Suggestions / next steps
-
-- Use SIGTERM and graceful shutdown handling in the Python loggers to avoid data loss.
-- Add more analysis (min/max/average of numeric values) to `analyze_logs.sh`.
-- Add an integration test that starts the loggers, writes a few lines, runs archive + analyze, and checks outputs.
 
 ## Troubleshooting
 
 - If a script reports a missing file, ensure `hospital_data/active_logs/` contains the expected `*_log.log` files.
 - Permissions: make sure the user running the scripts can create files under `hospital_data/`.
 
-## Contact
-
-If you want me to add non-interactive flags, graceful shutdown, or tests, tell me which to implement next.
