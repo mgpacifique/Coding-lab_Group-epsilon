@@ -5,7 +5,7 @@ active_dir_path="hospital_data/active_logs"
 destination="hospital_data/reports/analysis_report.txt"
 
 # make sure report directory exists
-mkdir -p "$destination"
+mkdir -p "$(dirname \"$destination\")"
 
 # loading animation
 echo -e "	*************************"
@@ -20,9 +20,9 @@ echo -ne "\r                                            \r"
 
 
 echo -e "\n	 Select log file to analyze:"
-echo -e "       1. Heart Rate (heart_rate.log)"
-echo -e "       2. Temperature (temperature.log)"
-echo -e "       3. Water Usage (water_usage.log)"
+echo -e "       1. Heart Rate (heart_rate_log.log)"
+echo -e "       2. Temperature (temperature_log.log)"
+echo -e "       3. Water Usage (water_usage_log.log)"
 echo -e "       *************************"
 read -p "	Please Enter choice (1-3): " choice
 
@@ -54,9 +54,9 @@ case "$choice" in
     for i in {1..5}; do echo -n "."; sleep 0.5; done
     sleep 0.2
     echo -ne "\r                                         \r"
-    echo "<<<<<<<<< ERROR >>>>>>>>>>>"
-    echo -e "Please select from options given (1-3)"
-    exit 
+      echo "<<<<<<<<< ERROR >>>>>>>>>>>"
+      echo -e "Please select from options given (1-3)"
+      exit 1
     ;;
 esac
 
@@ -64,7 +64,7 @@ esac
 if [ ! -f "$file_path" ]; then
   echo -e "<<<<<<<<<<< ERROR! >>>>>>>>>>>>\nFile does not exist, please check your file path.\n"
  
-  exit 
+  exit 1
 fi
 
 # Ensuring destination file exists if not it will be created
@@ -76,9 +76,17 @@ fi
 
 
 # Counting devices and collecting their timestamps
-device_counts=$(awk '{print $3}' "$file_path" | sort | uniq -c | awk '{print $2": "$1}')
-first_times=$(head -n 1 "$file_path" | awk '{print $1}')
-last_times=$(tail -n 1 "$file_path" | awk '{print $1}')
+# total non-blank lines
+total_lines=$(grep -cve '^[[:space:]]*$' "$file_path" || true)
+if [ "$total_lines" -eq 0 ]; then
+  device_counts="No entries found."
+  first_times="N/A"
+  last_times="N/A"
+else
+  device_counts=$(awk 'NF{print $3}' "$file_path" | sort | uniq -c | awk '{print $2": "$1}')
+  first_times=$(awk 'NF{print $1" "$2; exit}' "$file_path")
+  last_times=$(awk 'NF{t=$1" "$2} END{print t}' "$file_path")
+fi
 
 # Appending analysis report
 {

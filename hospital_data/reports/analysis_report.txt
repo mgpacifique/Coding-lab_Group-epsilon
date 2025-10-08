@@ -1,0 +1,41 @@
+	Log Analysis Report	Date: Wed Oct  8 03:00:51 PM CAT 2025
+	Analyzed File: hospital_data/active_logs/heart_rate_log.log
+
+	Device Counts:
+	
+
+	First Entry Timestamp: 
+	Last Entry Timestamp : 
+	Log Analysis Report	Date: Wed Oct  8 03:05:01 PM CAT 2025
+	Analyzed File: hospital_data/active_logs/heart_rate_log.log
+
+	Device Counts:
+	
+
+	First Entry Timestamp: 
+	Last Entry Timestamp : 
+	Log Analysis Report	Date: Wed Oct  8 03:05:46 PM CAT 2025
+	Analyzed File: hospital_data/active_logs/heart_rate_log.log
+
+	Device Counts:
+	No entries found.
+
+	First Entry Timestamp: N/A
+	Last Entry Timestamp : N/A
+	Log Analysis Report	Date: Wed Oct  8 03:06:08 PM CAT 2025
+	Analyzed File: hospital_data/active_logs/heart_rate_log.log
+
+	Device Counts:
+	HeartRate_Monitor_A: 2
+HeartRate_Monitor_B: 2
+
+	First Entry Timestamp: 2025-10-08 15:10:00
+	Last Entry Timestamp : 2025-10-08 15:10:03
+	Log Analysis Report	Date: Wed Oct  8 03:07:02 PM CAT 2025
+	Analyzed File: hospital_data/active_logs/temperature_log.log
+
+	Device Counts:
+	No entries found.
+
+	First Entry Timestamp: N/A
+	Last Entry Timestamp : N/A
