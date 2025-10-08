@@ -30,7 +30,7 @@ Existing data (examples) may be present under `hospital_data/` (check `hospital_
 
 No external Python packages are required.
 
-## Quick start — run the loggers
+## Quick start - run the loggers
 
 Each logger writes one or more device readings per second to its log file. Run them in separate terminals or background jobs.
 
