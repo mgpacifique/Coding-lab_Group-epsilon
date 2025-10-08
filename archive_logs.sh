@@ -1,39 +1,57 @@
 #!/bin/bash
-# log files
-logs=(" heart_rate_log.log" "temperature_log.log" "water_usage_log.log")
-# menu
+
+# Base Directories
+BASE_DIR="hospital_data"
+ACTIVE_DIR="$BASE_DIR/active_logs"
+ARCHIVE_DIR="$BASE_DIR/archived_logs"
+
+#Menu
 echo "choose a running log file to archive:"
-echo "1) Heart Rate (heart_rate_log.log)"
-echo "2) Temperature (temperature_log.log)"
-echo "3) Water usage (water_usage_log.log)"
+echo "1) Heart Rate"
+echo "2) Temperature"
+echo "3) Water usage"
 read -p "Enter choice (1-3): " choice
 
-# validate
-if ! [[ "$choice" =~ ^[1-3]$ ]]; then
-        echo "error . please enter 1, 2, or 3."
-        exit 1
+#Timestamp
+timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+
+case $choice in
+1)
+logfile="heart_rate.log"
+archivefolder="heart_data_archive"
+;;
+2)
+logfile="temperature.log"
+archivefolder="temperature_data_archive"
+;;
+3)
+logfile="water_usage.log"
+archivefolder="water_usage_data_archive"
+;;
+*)
+echo "❌ Invalid choice: Please select 1, 2, or 3."
+exit 1
+;;
+esac
+
+#Path
+src="$ACTIVE_DIR/$logfile"
+dest="$ARCHIVE_DIR/$archivefolder/${logfile%.log}_$timestamp.log"
+
+#Check if file exists
+if [[ ! -f $src ]]; then
+	echo "❌ Log file $src does not exist!"
+	exit 1
 fi
-log_file="${logs[$((choice-1))]}"
-# checking if the log file exists
-if [ ! -f "$log-file" ]; then
-        echo "log file $log_file does not exist."
-        exit 1
+
+# Create archive folder if it doesn't exist
+mkdir -p "$ARCHIVE_DIR/$archivefolder"
+
+#Move and create new log (only touch new log if move succeeds)
+if mv "$src" "$dest"; then
+	touch "$src"
+	echo "✅ Archived $logfile to $dest"
+else
+	echo "❌ Failed to archive $logfile to $dest" >&2
+	exit 1
 fi
-
-# report header
-timestamp=$(date +"%Y-%m-%d %H:%M:%S")
-report="reports/analysis_report.txt"
-echo -e "\n--Analysis Report: $log_file @ $timestamp --" >> "$report"
-
-#count
-awk '{print $2}' "$log_file" | sort | uniq -c | while read count device; do
- echo "Device: $device | count: >> "$report"
-
-#first and last timestamps
-First=$(grep "$device" "$log_file" | head -n 1 | awk '{print $1}')
-Last=$(grep "$device" "$log_file" | tail -n 1 | awk '{print $1}')
-echo "  First seen: $first" >> "$report"
-echo "  Last seen: $last" >> "$report"
-done
-echo "Analysis complete. Results appended to $report"
-                                                                                       
