@@ -29,7 +29,7 @@ logfile="water_usage_log.log"
 archivefolder="water_usage_data_archive"
 ;;
 *)
-echo "❌ Invalid choice: Please select 1, 2, or 3."
+echo " Invalid choice: Please select 1, 2, or 3."
 exit 1
 ;;
 esac
@@ -40,7 +40,7 @@ dest="$ARCHIVE_DIR/$archivefolder/${logfile%.log}_$timestamp.log"
 
 #Check if file exists
 if [[ ! -f $src ]]; then
-	echo "❌ Log file $src does not exist!"
+	echo " Log file $src does not exist!"
 	exit 1
 fi
 
@@ -50,8 +50,8 @@ mkdir -p "$ARCHIVE_DIR/$archivefolder"
 #Move and create new log (only touch new log if move succeeds)
 if mv "$src" "$dest"; then
 	touch "$src"
-	echo "✅ Archived $logfile to $dest"
+	echo " Archived $logfile to $dest"
 else
-	echo "❌ Failed to archive $logfile to $dest" >&2
+	echo " Failed to archive $logfile to $dest" 
 	exit 1
 fi
